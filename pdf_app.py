@@ -49,7 +49,7 @@ if uploaded_file:
     # Input Box
     query = st.text_input("Ask a question about the PDF:")
     if query:
-        with st.spinner("💭 Thinking..."):
+        with st.spinner(" Thinking..."):
             result = qa(query)
             st.markdown("###  Answer:")
             st.write(result["result"])
