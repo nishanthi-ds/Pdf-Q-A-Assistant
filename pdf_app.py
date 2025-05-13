@@ -1,17 +1,15 @@
 import streamlit as st
 from langchain.llms import Ollama
 from langchain.embeddings import OllamaEmbeddings
-# from langchain.vectorstores import Chroma
 from langchain_community.vectorstores import Chroma
-
 from langchain.document_loaders import PyPDFLoader
 from langchain.text_splitter import CharacterTextSplitter
 from langchain.chains import RetrievalQA
 import tempfile
 import os
 
-st.set_page_config(page_title="📄 PDF Q&A with Ollama", layout="centered")
-st.title("📄 Local PDF Q&A Assistant (Ollama + Streamlit)")
+st.set_page_config(page_title="PDF Q&A with Ollama", layout="centered")
+st.title("PDF Q&A Assistant ")
 
 uploaded_file = st.file_uploader("Upload a PDF file", type=["pdf"])
 
@@ -21,7 +19,7 @@ if uploaded_file:
         tmp_path = tmp_file.name
 
     # Load and split PDF
-    with st.spinner("🔍 Reading and indexing your PDF..."):
+    with st.spinner(" Reading and indexing your PDF..."):
         loader = PyPDFLoader(tmp_path)
         pages = loader.load()
         text_splitter = CharacterTextSplitter(chunk_size=1000, chunk_overlap=100)
@@ -46,17 +44,17 @@ if uploaded_file:
             return_source_documents=True
         )
 
-    st.success("✅ PDF indexed successfully!")
+    st.success(" PDF indexed successfully!")
 
     # Input Box
     query = st.text_input("Ask a question about the PDF:")
     if query:
         with st.spinner("💭 Thinking..."):
             result = qa(query)
-            st.markdown("### 🧠 Answer:")
+            st.markdown("###  Answer:")
             st.write(result["result"])
 
-            # with st.expander("📄 Sources"):
+            # with st.expander(" Sources"):
             #     for doc in result["source_documents"]:
             #         st.write(doc.page_content[:300] + "...")
             #         st.write("---")
